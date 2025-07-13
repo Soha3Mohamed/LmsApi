@@ -1,4 +1,9 @@
 
+using LmsApi.Extensions;
+using LmsApi.Mappings;
+using LmsApi.Models.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace LmsApi
 {
     public class Program
@@ -13,6 +18,14 @@ namespace LmsApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.ConfigureCors();
+            builder.Services.ConfigureIIS();
+
+            builder.Services.AddServices();
+            MapsterConfig.RegisterMappings();
 
             var app = builder.Build();
 
