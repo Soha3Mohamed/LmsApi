@@ -8,6 +8,8 @@
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public int InstructorId { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public bool IsPublished { get; set; } = false;
         public User User { get; set; }
         public int QuizId { get; set; }
         public List<Lesson> Lessons { get; set; } = new List<Lesson>();

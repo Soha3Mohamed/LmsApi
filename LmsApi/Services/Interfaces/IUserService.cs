@@ -10,20 +10,22 @@ namespace LmsApi.Services.Interfaces
         ServiceResult<List<GetUserDto>> GetAllUsers();
         ServiceResult<GetUserDto> GetUserById(int id);
         ServiceResult<GetUserDto> GetUserByEmail(string email);
-        ServiceResult<GetUserDto> UpdateUser(User user);
+        ServiceResult<GetUserDto> UpdateUser(int userId, AddUserDto userDto);
         ServiceResult<string> DeleteUser(int id);
 
         // Authentication
         ServiceResult<AuthResponseDto> Authenticate(AuthRequestDto authRequestDto);
         ServiceResult<AuthResponseDto> Register(AddUserDto userDto, string password);
-        string GenerateToken(User user);//after successful login in Authenticate
-        ServiceResult<string> RefreshToken(string token);
-
-
+        string GenerateAccessToken(User user);//after successful login in Authenticate
+        string GenerateRefreshToken();
+        public ServiceResult<AuthResponseDto> GenerateTokens(User user);
+        public ServiceResult<AuthResponseDto> RefreshToken(RefreshRequestDto refreshDto);
         // Account management
-        ServiceResult<User> ChangePassword(int userId, string oldPassword, string newPassword);
+        ServiceResult<string> ChangePassword(int userId, string oldPassword, string newPassword);
         ServiceResult<GetUserDto> ChangeEmail(int userId, string newEmail);
         ServiceResult<string> ResetPassword(string email, string newPassword);
+
+        public ServiceResult<RefreshResponseDto> Logout(int userId);
 
         // Email (later)
         //ServiceResult<string> SendPasswordResetEmail(string email);

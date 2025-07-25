@@ -1,5 +1,9 @@
 ﻿using LmsApi.Services.Implementation;
 using LmsApi.Services.Interfaces;
+using Microsoft.Identity.Client;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace LmsApi.Extensions
 {
@@ -26,17 +30,34 @@ namespace LmsApi.Extensions
             });
         }
 
-        public static void AddAuthentication(this IServiceCollection services)
+        public static void Addauthentication(this IServiceCollection services)
         {
-            //services.AddAuthentication(jwtbeare)
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidIssuer = "your-app",
+                        ValidAudience = "your-users",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourSuperVerySecurityKeyTest12345678")),
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
         }
-    
+        public static void Addauthorization(this IServiceCollection services)
+        {
+            services.AddAuthorization(); // Enables [Authorize]
+        }
+
         public static void AddServices(this IServiceCollection services)
         {
             //Custom Services are here
             services.AddScoped<IUserService, UserService>();
-            // services.AddScoped<IOtherService, OtherService>();
-            // services.AddScoped<IAnotherService, AnotherService>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ILessonService, LessonService>();
         }
 
     }

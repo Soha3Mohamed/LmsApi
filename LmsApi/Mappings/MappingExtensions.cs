@@ -10,7 +10,7 @@ namespace LmsApi.Mappings
         {
             return user.Adapt<GetUserDto>();
         }
-        public static User ToEntity(this GetUserDto dto) =>
+        public static User ToEntity(this AddUserDto dto) =>
         dto.Adapt<User>();
     }
 }

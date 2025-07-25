@@ -4,6 +4,7 @@ using LmsApi.Mappings;
 using LmsApi.Models.Data;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace LmsApi
 {
     public class Program
@@ -23,7 +24,8 @@ namespace LmsApi
 
             builder.Services.ConfigureCors();
             builder.Services.ConfigureIIS();
-
+            builder.Services.Addauthentication();
+            builder.Services.Addauthorization();
             builder.Services.AddServices();
             MapsterConfig.RegisterMappings();
 
@@ -36,10 +38,12 @@ namespace LmsApi
                 app.UseSwaggerUI();
             }
 
+            
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllers();
 

@@ -12,7 +12,8 @@
         public UserRole UserRole { get; set; } 
         public DateTime CreatedAt { get; set; }
 
-       
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiry { get; set; }
         public List<Rating> Ratings { get; set; } = new List<Rating>();
 
         public List<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
